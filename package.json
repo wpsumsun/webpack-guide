@@ -17,6 +17,7 @@
     "cross-env": "^6.0.3",
     "less": "^3.10.3",
     "less-loader": "^5.0.0",
+    "url-loader": "^2.2.0",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10"
   },
