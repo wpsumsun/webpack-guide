@@ -21,5 +21,5 @@ ReactDom.render(
   document.querySelector('#root')
 );
 if (module.hot) {
-  console.log('updated')
+  console.log('test if css file contenthash change')
 }
