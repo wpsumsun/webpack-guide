@@ -1,6 +1,9 @@
 const path = require('path');
 const webpack = require('webpack');
-const miniCssExtractPlugin = require('mini-css-extract-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   mode: 'production',
@@ -21,14 +24,14 @@ module.exports = {
       {
         test: /\.css$/,
         use: [
-          miniCssExtractPlugin.loader,
+          MiniCssExtractPlugin.loader,
           'css-loader'
         ]
       },
       {
         test: /\.less$/,
         use: [
-          miniCssExtractPlugin.loader,
+          MiniCssExtractPlugin.loader,
           'css-loader',
           'less-loader'
         ]
@@ -54,8 +57,48 @@ module.exports = {
     ]
   },
   plugins: [
-    new miniCssExtractPlugin({
+    new MiniCssExtractPlugin({
       filename: '[name]_[contenthash:8].css'
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'index.html',
+      chunks: ['index'], // Allows you to add only some chunks
+      inject: true, // true || 'head' || 'body' || false Inject all assets into the given template or templateContent. When passing true or 'body' all javascript resources will be placed at the bottom of the body element. 'head' will place the scripts in the head element
+      minify: {
+        html5: true, // Parse input according to HTML5 specifications
+        collapseWhitespace: true, // Collapse white space that contributes to text nodes in a document tree
+        preserveLineBreaks: false, // Always collapse to 1 line break (never remove it entirely) when whitespace between tags include a line break. Must be used in conjunction with collapseWhitespace=true
+        minifyCSS: true,
+        minifyJS: true,
+        removeComments: false
+      }
+    }),
+    new HtmlWebpackPlugin({
+      template: path.join(__dirname, 'src/search.html'),
+      filename: 'search.html',
+      chunks: ['search'], // Allows you to add only some chunks
+      inject: true, // true || 'head' || 'body' || false Inject all assets into the given template or templateContent. When passing true or 'body' all javascript resources will be placed at the bottom of the body element. 'head' will place the scripts in the head element
+      minify: {
+        html5: true, // Parse input according to HTML5 specifications
+        collapseWhitespace: true, // Collapse white space that contributes to text nodes in a document tree
+        preserveLineBreaks: false, // Always collapse to 1 line break (never remove it entirely) when whitespace between tags include a line break. Must be used in conjunction with collapseWhitespace=true
+        minifyCSS: true,
+        minifyJS: true,
+        removeComments: false
+      }
+    }),
+    new OptimizeCssAssetsPlugin({
+      assetNameRegExp: /\.css$/g,
+      cssProcessor: require('cssnano')
     })
-  ]
+  ],
+  optimization: {
+    minimize: true, // production mode default true
+    minimizer: [
+      new UglifyJsPlugin({
+        test: /\.js(\?.*)?$/i,
+        parallel: true
+      })
+    ],
+  }
 }
