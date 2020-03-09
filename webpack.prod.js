@@ -89,6 +89,7 @@ module.exports = {
       filename: '[name]_[contenthash:8].css'
     }),
     new HtmlWebpackPlugin({
+      template: path.join(__dirname, 'src/index.html'),
       filename: 'index.html',
       chunks: ['index'], // Allows you to add only some chunks
       inject: true, // true || 'head' || 'body' || false Inject all assets into the given template or templateContent. When passing true or 'body' all javascript resources will be placed at the bottom of the body element. 'head' will place the scripts in the head element
