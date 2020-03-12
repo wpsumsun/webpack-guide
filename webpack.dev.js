@@ -92,4 +92,5 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new CleanWebpackPlugin()
   ].concat(htmlWebpackPlugins),
+  devtool: 'source-map'
 };
