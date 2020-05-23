@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 import './search.less'
-import Logo from './images/test.jpeg'
+import Logo from '../images/test.jpeg'
 import Input from './input'
 
 
-class Search extends React.Component {
+class Index extends React.Component {
   render() {
     return <div className='searchWrapper'>
       <Input/>
@@ -17,7 +17,7 @@ class Search extends React.Component {
 }
 
 ReactDom.render(
-  <Search/>,
+  <Index/>,
   document.querySelector('#root')
 );
 if (module.hot) {
