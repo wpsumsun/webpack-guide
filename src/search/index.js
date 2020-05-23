@@ -6,12 +6,28 @@ import Input from './input'
 
 
 class Index extends React.Component {
+  constructor() {
+    super(...arguments);
+    this.state = {
+      Text: null
+    }
+  }
+  loadComponent() {
+    console.log(1);
+    import('./Text.js').then((Text) => {
+      this.setState({
+        Text: Text.default
+      })
+    })
+  }
   render() {
+    const { Text } = this.state;
     return <div className='searchWrapper'>
+      { Text ? <Text/> : '' }
       <Input/>
       本地<input type="text"/>
       <span>search</span>
-      <img src={ Logo } alt='logo'/>
+      <img src={ Logo } alt='logo' onClick={ this.loadComponent.bind(this) }/>
     </div>;
   }
 }
