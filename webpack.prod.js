@@ -112,7 +112,8 @@ module.exports = {
       assetNameRegExp: /\.css$/g,
       cssProcessor: require('cssnano')
     }),
-    new CleanWebpackPlugin()
+    new CleanWebpackPlugin(),
+    new webpack.optimize.ModuleConcatenationPlugin()
   ],
   optimization: {
     minimize: true, // production mode default true
