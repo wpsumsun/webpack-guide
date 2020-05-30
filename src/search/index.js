@@ -1,8 +1,8 @@
-import React from 'react';
-import ReactDom from 'react-dom';
-import './search.less'
-import Logo from '../images/test.jpeg'
-import Input from './input'
+import React from "react";
+import ReactDom from "react-dom";
+import "./search.less"
+import Logo from "../images/test.jpeg"
+import Input from "./input"
 
 
 class Index extends React.Component {
@@ -14,7 +14,7 @@ class Index extends React.Component {
   }
   loadComponent() {
     console.log(1);
-    import('./Text.js').then((Text) => {
+    import("./Text.js").then((Text) => {
       this.setState({
         Text: Text.default
       })
@@ -23,7 +23,7 @@ class Index extends React.Component {
   render() {
     const { Text } = this.state;
     return <div className='searchWrapper'>
-      { Text ? <Text/> : '' }
+      { Text ? <Text/> : "" }
       <Input/>
       本地<input type="text"/>
       <span>search</span>
@@ -34,8 +34,8 @@ class Index extends React.Component {
 
 ReactDom.render(
   <Index/>,
-  document.querySelector('#root')
+  document.querySelector("#root")
 );
 if (module.hot) {
-  console.log('test if css file contenthash change')
+  console.log("test if css file contenthash change")
 }
