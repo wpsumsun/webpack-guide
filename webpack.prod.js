@@ -1,11 +1,11 @@
-const path = require('path');
-const webpack = require('webpack');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const HtmlWebpackExternalsPlugin = require('html-webpack-externals-plugin');
+const path = require("path");
+const webpack = require("webpack");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const HtmlWebpackExternalsPlugin = require("html-webpack-externals-plugin");
 const glob = require("glob");
 
 const setMultiplePage = () => {
@@ -39,29 +39,30 @@ const setMultiplePage = () => {
 const { entry, htmlWebpackPlugins } = setMultiplePage();
 
 module.exports = {
-  mode: 'production',
+  mode: "production",
   entry,
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: '[name]_[chunkhash:8].js'
+    path: path.resolve(__dirname, "dist"),
+    filename: "[name]_[chunkhash:8].js"
   },
   module: {
     rules: [
       {
         test: /\.js$/,
-        use: 'babel-loader'
+        exclude: /node_modules/,
+        use: ["babel-loader", "eslint-loader"]
       },
       {
         test: /\.css$/,
         use: [
           MiniCssExtractPlugin.loader,
-          'css-loader',
+          "css-loader",
           {
-            loader: 'postcss-loader',
+            loader: "postcss-loader",
             options: {
               plugins: () => [
-                require('autoprefixer')({
-                  'overrideBrowserslist': ['> 1%', 'last 2 versions']
+                require("autoprefixer")({
+                  "overrideBrowserslist": ["> 1%", "last 2 versions"]
                 })
               ]
             }
@@ -72,68 +73,68 @@ module.exports = {
         test: /\.less$/,
         use: [
           MiniCssExtractPlugin.loader,
-          'css-loader',
+          "css-loader",
           {
-            loader: 'postcss-loader',
+            loader: "postcss-loader",
             options: {
               plugins: () => [
-                require('autoprefixer')({
-                  'overrideBrowserslist': ['> 1%', 'last 2 versions']
+                require("autoprefixer")({
+                  "overrideBrowserslist": ["> 1%", "last 2 versions"]
                 })
               ]
             }
           },
           {
-            loader: 'px2rem-loader',
+            loader: "px2rem-loader",
             options: {
               remUnit: 75,
               remPrecision: 8
             }
           },
-          'less-loader'
+          "less-loader"
         ]
       },
       {
         test: /\.(png|jpg|jpeg|git)$/,
         use: [
           {
-            loader: 'file-loader',
+            loader: "file-loader",
             options: {
-              name: '[name]_[hash:8].[ext]'
+              name: "[name]_[hash:8].[ext]"
             }
           }
         ]
       },
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/,
-        loader: 'file-loader',
+        loader: "file-loader",
         options: {
-          name: '[name]_[hash:8].[ext]'
+          name: "[name]_[hash:8].[ext]"
         }
       }
     ]
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: '[name]_[contenthash:8].css'
+      filename: "[name]_[contenthash:8].css"
     }),
     new OptimizeCssAssetsPlugin({
       assetNameRegExp: /\.css$/g,
-      cssProcessor: require('cssnano')
+      cssProcessor: require("cssnano")
     }),
     new CleanWebpackPlugin(),
     new webpack.optimize.ModuleConcatenationPlugin(),
     new HtmlWebpackExternalsPlugin({
       externals: [
         {
-          module: 'react',
-          entry: 'https://unpkg.com/react@16/umd/react.production.min.js',
-          global: 'React',
+          module: "react",
+          entry: "https://unpkg.com/react@16/umd/react.production.min.js",
+          global: "React",
         },
         {
-          module: 'react-dom',
-          entry: 'https://unpkg.com/react-dom@16/umd/react-dom.production.min.js',
-          global: 'ReactDOM',
+          module: "react-dom",
+          entry: "https://unpkg.com/react-dom@16/umd/react-dom.production.min.js",
+          global: "ReactDOM",
         }
       ]
     })
